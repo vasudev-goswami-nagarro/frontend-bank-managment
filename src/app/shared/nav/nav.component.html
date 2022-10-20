@@ -1,11 +1,12 @@
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #drawer class="sidenav" fixedInViewport
+  <mat-sidenav
+    #drawer class="sidenav" fixedInViewport
                [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
                [mode]="(isHandset$ | async) ? 'over' : 'side'"
                [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
-      <a mat-list-item routerLink="/">Home</a>
+      <a mat-list-item (click)="navigate()">Home</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav-content">
@@ -23,8 +24,10 @@
       <a mat-button>Customer Form</a>
       <a mat-button>Table</a>
       <a mat-button routerLink="admin">User Profile</a>
-      <a mat-raised-button color="accent" routerLink="auth/login" *ngIf="!userName">Log In</a>
-      <a mat-raised-button color="accent" (click)="logout()" *ngIf="userName">Log Out</a>
+      <a mat-raised-button color="accent" (click)="logout()" *ngIf="isLoggedIn$ | async as isLoggedIn;else other">Log Out</a>
+      <ng-template #other>
+        <a mat-raised-button color="accent" routerLink="auth/login">Log In</a>
+      </ng-template>
     </mat-toolbar>
     <!-- Add Content Here -->
     <router-outlet></router-outlet>

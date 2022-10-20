@@ -154,12 +154,11 @@
         </mat-form-field>
         <mat-card-actions>
           <button mat-raised-button id="login" color="primary" [disabled]="transactionForm.invalid || loading"
-                  (click)="login()">Login</button>
+                  (click)="login()">Create Transaction</button>
         </mat-card-actions>
-
+        <br>
       </mat-card>
     </div>
-
 
     <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
   </form>
