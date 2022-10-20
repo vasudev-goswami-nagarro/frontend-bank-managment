@@ -17,6 +17,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [NavComponent, AccessDeniedComponent, CustomerFormComponent, TableComponent],
@@ -36,7 +38,9 @@ import {MatTableModule} from '@angular/material/table';
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
-    MatTableModule
+    MatTableModule,
+    ReactiveFormsModule,
+    MatRadioModule
   ]
 })
 export class SharedModule { }

@@ -79,7 +79,6 @@ export class TransactionEditComponent implements OnInit {
 
     this.customerServiceService.createTransaction(this.transactionForm.getRawValue()).subscribe(value => {
       this.transactions = value;
-      console.log(this.transactions);
     });
   }
 
