@@ -10,6 +10,9 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {MatButtonModule} from '@angular/material/button';
 import {MatInputModule} from '@angular/material/input';
 import {SharedModule} from './shared/shared.module';
+import {HttpClientModule} from '@angular/common/http';
+import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
+import {FakeApiService} from './core/services/fake-api.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +27,9 @@ import {SharedModule} from './shared/shared.module';
     MatCardModule,
     MatButtonModule,
     MatInputModule,
-    SharedModule
+    SharedModule,
+    HttpClientModule,
+    HttpClientInMemoryWebApiModule.forRoot(FakeApiService)
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -3,13 +3,27 @@
 
     <div class="col-sm-5">
       <mat-card class="container">
+
+        <h4>List of customers</h4>
+        <mat-form-field appearance="fill">
+          <mat-label>Customers</mat-label>
+          <mat-select [(value)]="selectedCustomerNumber"
+                      (selectionChange)="getCustomerByReferenceNumber(selectedCustomerNumber)">
+            <mat-option *ngFor="let txn of transactions" [value]="txn.customerNumber">
+              {{txn.customerNumber}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <br>
+        <hr>
         <mat-card-title>Create Transaction</mat-card-title>
         <br>
         <mat-card-content>
 
           <mat-radio-group aria-label="Select an option" formControlName="selected">
-            <mat-radio-button value="New">New </mat-radio-button>
-            <mat-radio-button value="Existing"> Existing</mat-radio-button>
+            <mat-radio-button value="New" (change)="clearForm()">New </mat-radio-button>
+            <mat-radio-button value="Existing" > Existing</mat-radio-button>
           </mat-radio-group>
 
           <mat-form-field class="full-width">
@@ -153,8 +167,9 @@
           </mat-select>
         </mat-form-field>
         <mat-card-actions>
-          <button mat-raised-button id="login" color="primary" [disabled]="transactionForm.invalid || loading"
-                  (click)="login()">Create Transaction</button>
+          <button mat-raised-button id="create" color="primary" [disabled]="transactionForm.invalid || loading"
+                  (click)="submit()">Create Transaction</button>
+          <button mat-raised-button id="clear" color="primary" (click)="clearForm()">Clear</button>
         </mat-card-actions>
         <br>
       </mat-card>

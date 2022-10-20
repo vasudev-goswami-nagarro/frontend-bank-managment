@@ -1,0 +1,62 @@
+export const TRANSACTIONS =  [
+  {
+    reference: '123',
+    customerNumber: '123',
+    customerName: '123',
+    address: '123',
+    phone: '123',
+    amount: '123',
+    currency: 'AED',
+    bank: 'bank',
+    accountNumber: 12,
+    paymentDetails: 'payment details',
+    creditDebitDetails: '123',
+    selected: '12',
+    region: 'Port Louis'
+  },
+  {
+    reference: '456',
+    customerNumber: '345',
+    customerName: '123',
+    address: '123',
+    phone: '123',
+    amount: '123',
+    currency: 'EUR',
+    bank: 'bank',
+    accountNumber: 1,
+    paymentDetails: 'pay de',
+    creditDebitDetails: '123',
+    selected: '12',
+    region: 'CurePipe'
+  },
+  {
+    reference: '789',
+    customerNumber: '768',
+    customerName: '123',
+    address: '123',
+    phone: '123',
+    amount: '123',
+    currency: 'CHF',
+    bank: 'abc bank',
+    accountNumber: 12,
+    paymentDetails: 'pay d',
+    creditDebitDetails: '123',
+    selected: '12',
+    region: 'Vacoas'
+  },
+  {
+    reference: '423',
+    customerNumber: '987',
+    customerName: '123',
+    address: '123',
+    phone: '123',
+    amount: '123',
+    currency: 'MUR',
+    bank: 'bank name',
+    accountNumber: 13,
+    paymentDetails: '123',
+    creditDebitDetails: '123',
+    selected: '12',
+    region: 'Port Mathurin'
+  }
+]

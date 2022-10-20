@@ -11,4 +11,5 @@ export interface Transaction {
   paymentDetails: string;
   creditDebitDetails: string;
   selected: string;
+  region: string;
 }
