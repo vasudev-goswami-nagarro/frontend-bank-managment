@@ -21,8 +21,8 @@
       </button>
       <span> <mat-icon>eco</mat-icon>Bank</span>
       <div class="spacer"></div>
-      <a mat-button>Customer Form</a>
-      <a mat-button>Table</a>
+      <a mat-button routerLink="customer-form">Customer Form</a>
+      <a mat-button routerLink="table">Table</a>
       <a mat-button routerLink="admin">User Profile</a>
       <a mat-raised-button color="accent" (click)="logout()" *ngIf="isLoggedIn$ | async as isLoggedIn;else other">Log Out</a>
       <ng-template #other>

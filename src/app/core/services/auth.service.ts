@@ -29,7 +29,7 @@ export class AuthService {
       .pipe(
         map((/*response*/) => {
           localStorage.setItem('currentUser', JSON.stringify({
-            isAdmin: true,
+            isAdmin: username === 'admin',
             username,
             password
           }));

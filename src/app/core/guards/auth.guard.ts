@@ -17,8 +17,7 @@ export class AuthGuard implements CanActivate {
     const currentUser = this.authService.getCurrentUser();
     console.log(currentUser);
     if (currentUser && currentUser.username) {
-      const authorities = next.data.authorities;
-      if (authorities[0] === 'admin') {
+      if (currentUser.isAdmin) {
         return true;
       }
       this.router.navigate(['accessdenied']);

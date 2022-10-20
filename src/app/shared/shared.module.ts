@@ -11,9 +11,15 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import {MatCardModule} from '@angular/material/card';
 import { AccessDeniedComponent } from './access-denied/access-denied.component';
+import { CustomerFormComponent } from './customer-form/customer-form.component';
+import { TableComponent } from './table/table.component';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import {MatInputModule} from '@angular/material/input';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
-  declarations: [NavComponent, AccessDeniedComponent],
+  declarations: [NavComponent, AccessDeniedComponent, CustomerFormComponent, TableComponent],
   exports: [
     NavComponent
   ],
@@ -26,7 +32,11 @@ import { AccessDeniedComponent } from './access-denied/access-denied.component';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatCardModule
+    MatCardModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatTableModule
   ]
 })
 export class SharedModule { }
