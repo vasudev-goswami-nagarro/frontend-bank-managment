@@ -59,4 +59,4 @@ export const TRANSACTIONS =  [
     selected: '12',
     region: 'Port Mathurin'
   }
-]
+];

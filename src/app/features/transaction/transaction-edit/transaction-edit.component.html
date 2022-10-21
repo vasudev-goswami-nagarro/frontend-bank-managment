@@ -4,18 +4,6 @@
     <div class="col-sm-5">
       <mat-card class="container">
 
-        <h4>List of customers</h4>
-        <mat-form-field appearance="fill">
-          <mat-label>Customers</mat-label>
-          <mat-select [(value)]="selectedCustomerNumber"
-                      (selectionChange)="getCustomerByReferenceNumber(selectedCustomerNumber)">
-            <mat-option *ngFor="let txn of transactions" [value]="txn.customerNumber">
-              {{txn.customerNumber}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <br>
         <hr>
         <mat-card-title>Create Transaction</mat-card-title>
         <br>
@@ -39,8 +27,9 @@
           </mat-form-field>
 
           <mat-form-field class="full-width">
-            <input id="customerNumberInput" matInput placeholder="Customer Number" formControlName="customerNumber" type="customerNumber"
-                   autocomplete="current-customerNumber">
+            <input id="customerNumberInput" matInput placeholder="Customer Number"
+                   formControlName="customerNumber" type="customerNumber"
+                   autocomplete="current-customerNumber" (keyup.enter)="getCustomerByCustomerNumber()">
             <mat-error id="requiredCustomerNumberError" *ngIf="transactionForm.controls['reference'].hasError('required')">
               Customer Number is
               <strong>required</strong>

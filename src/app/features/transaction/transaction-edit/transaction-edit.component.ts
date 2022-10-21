@@ -4,6 +4,9 @@ import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {CustomerServiceService} from '../../../core/services/customer-service.service';
 import {Transaction} from '../transaction';
+import {Customer} from '../customer';
+import customer from 'src/assets/customer.json';
+import {TransactionService} from '../../../core/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-edit',
@@ -15,37 +18,30 @@ export class TransactionEditComponent implements OnInit {
   transactionForm!: FormGroup;
   loading!: boolean;
   selected = 'New';
-  selectedCustomerNumber: string;
-  transactions: Transaction[];
-  transaction: Transaction;
+  transactions: Transaction[] = [];
+  customer: Customer = customer;
 
   constructor(private router: Router,
               private customerServiceService: CustomerServiceService,
+              private transactionService: TransactionService,
               private titleService: Title) {
   }
 
   ngOnInit() {
-    this.getAllCustomers();
     this.titleService.setTitle('Create Transaction');
     this.createForm();
   }
 
-  getAllCustomers () {
-    this.customerServiceService.getCustomers().subscribe(value => {
-      this.transactions = value;
-    });
-  }
-
-  getCustomerByReferenceNumber(customerNumber: string) {
-    this.customerServiceService.getCustomerByNumber(customerNumber).subscribe(value => {
-      this.transaction = value[0];
-      this.patchForm(this.transaction);
-    });
+  getCustomerByCustomerNumber() {
+    const value1 = this.transactionForm.get('customerNumber').value;
+    if (value1 === customer.responseXML.getCustomerInfoResponse.getCustomerInfoResult.CUST_INFO.CUST_NO) {
+      this.patchForm();
+    }
   }
 
   private createForm() {
     this.transactionForm = new FormGroup({
-      reference: new FormControl('', [Validators.required]),
+      reference: new FormControl(this.createReference(), [Validators.required]),
       customerNumber: new FormControl('', Validators.required),
       customerName: new FormControl('', Validators.required),
       address: new FormControl('', Validators.required),
@@ -62,45 +58,34 @@ export class TransactionEditComponent implements OnInit {
   }
 
   submit() {
-    console.log(this.transactionForm.getRawValue());
-    const reference = this.transactionForm.get('reference')?.value;
-    const customerNumber = this.transactionForm.get('customerNumber')?.value;
-    const customerName = this.transactionForm.get('customerName')?.value;
-    const address = this.transactionForm.get('address')?.value;
-    const phone = this.transactionForm.get('phone')?.value;
-    const amount = this.transactionForm.get('amount')?.value;
-    const currency = this.transactionForm.get('currency')?.value;
-    const bank = this.transactionForm.get('bank')?.value;
-    const accountNumber = this.transactionForm.get('accountNumber')?.value;
-    const paymentDetails = this.transactionForm.get('paymentDetails')?.value;
-    const creditDebitDetails = this.transactionForm.get('creditDebitDetails')?.value;
-    const selected = this.transactionForm.get('selected')?.value;
-    const region = this.transactionForm.get('region')?.value;
-
-    this.customerServiceService.createTransaction(this.transactionForm.getRawValue()).subscribe(value => {
+    this.transactionService.getTransactions().subscribe(value => {
       this.transactions = value;
+      this.transactions.push(this.transactionForm.getRawValue());
     });
+    this.transactionService.getTransactions().next(this.transactions);
+    this.router.navigate(['transaction', 'home']);
   }
 
   clearForm() {
     this.transactionForm.reset();
+    this.transactionForm.patchValue({
+      selected: 'New',
+      reference: this.createReference()
+    });
   }
 
-  patchForm(transaction: Transaction) {
+  patchForm() {
     this.transactionForm.patchValue({
-      reference: transaction.reference,
-      customerNumber: transaction.customerNumber,
-      customerName: transaction.customerName,
-      address: transaction.address,
-      phone: transaction.phone,
-      amount: transaction.amount,
-      currency: transaction.currency,
-      bank: transaction.bank,
-      accountNumber: transaction.accountNumber,
-      paymentDetails: transaction.paymentDetails,
-      creditDebitDetails: transaction.creditDebitDetails,
-      selected: 'Existing',
-      region: transaction.region,
+      customerName: this.customer.responseXML.getCustomerInfoResponse.getCustomerInfoResult.CUST_INFO.SHORT_NAME,
+      address: this.customer.responseXML.getCustomerInfoResponse.getCustomerInfoResult.CUST_INFO.ADDRESS_LINE2
+          .concat(this.customer.responseXML.getCustomerInfoResponse.getCustomerInfoResult.CUST_INFO.ADDRESS_LINE2),
+      phone: this.customer.responseXML.getCustomerInfoResponse
+        .getCustomerInfoResult.CUST_INFO.CONTACT_INFO_V7.CONTACT_INFO_V7
+        .PHONE_LIST_V7.PHONE_LIST_ITEM_V7.PHONE,
     });
+  }
+
+  private  createReference() {
+    return `CUS${Math.floor(10000 * Math.random())}${Math.floor(100 * Math.random())}${Math.floor(100 * Math.random())}`;
   }
 }

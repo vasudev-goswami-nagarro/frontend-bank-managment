@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import transactions from 'src/assets/transactions.json';
 import {MatPaginator} from '@angular/material/paginator';
 import {Transaction} from '../transaction';
+import {TransactionService} from '../../../core/services/transaction.service';
 
 @Component({
   selector: 'app-transaction-list',
@@ -23,12 +24,16 @@ export class TransactionListComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
-    private titleService: Title
+    private titleService: Title,
+    private transactionService: TransactionService
   ) { }
 
   ngOnInit() {
     this.titleService.setTitle('angular-material-template - Customers');
     this.dataSource.sort = this.sort;
+    this.transactionService.getTransactions().subscribe(value => {
+      this.transactions = value;
+    });
   }
 
   ngAfterViewInit() {
