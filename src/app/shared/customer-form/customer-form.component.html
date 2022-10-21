@@ -27,12 +27,19 @@
           </mat-radio-group>
 
           <section>
-            <div *ngFor="let ref of getReferencesFormControls(); let i = index">
+            <div *ngFor="let reference of getReferencesFormControls(); let i = index">
               <mat-form-field>
                 <input id="referenceInput" matInput placeholder="References"
-                       [formControl]="ref"
-                       autocomplete="references"
-                       type="references">
+                       [formControl]="reference"
+                       autocomplete="reference"
+                       type="reference">
+                <mat-error id="invalidReferenceError" *ngIf="customerForm.controls['reference'].hasError('reference')">
+                  Please enter a valid reference
+                </mat-error>
+                <mat-error id="requiredReferenceError" *ngIf="customerForm.controls['reference'].hasError('required')">
+                  Reference is
+                  <strong>required</strong>
+                </mat-error>
               </mat-form-field>
               <a (click)="removeReference(i)">
                 <mat-icon>delete</mat-icon>
@@ -44,11 +51,11 @@
           </section>
 
           <section>
-            <div *ngFor="let ref of getCustomerNumberFormControls(); let i = index">
+            <div *ngFor="let customerNumber of getCustomerNumberFormControls(); let i = index">
               <mat-form-field class="full-width">
                 <input id="customerNumberInput" matInput placeholder="Customer Number"
                        type="customerNumber"
-                       [formControl]="ref"
+                       [formControl]="customerNumber"
                        autocomplete="current-customerNumber">
                 <mat-error id="requiredCustomerNumberError"
                            *ngIf="customerForm.controls['customerNumber'].hasError('required')">
@@ -76,7 +83,7 @@
                      type="customerName">
               <mat-error id="invalidCustomerNameError"
                          *ngIf="customerForm.controls['customerName'].hasError('customerName')">
-                Please enter a valid customerName address
+                Please enter a valid customerName
               </mat-error>
               <mat-error id="requiredCustomerNameError" *ngIf="customerForm.controls['customerName'].hasError('required')">
                 CustomerName is
@@ -92,7 +99,7 @@
           </div>
         </section>
 
-        <section>
+        <section *ngIf="selectedRegion !== 'Port Mathurin'">
           <div *ngFor="let ref of getAddressesFormControls(); let i = index">
             <mat-form-field class="full-width">
               <input id="addressInput" matInput placeholder="Address"  [formControl]="ref" autocomplete="address"
@@ -278,7 +285,7 @@
 
         <mat-form-field appearance="fill">
           <mat-label>Region</mat-label>
-          <mat-select formControlName="region">
+          <mat-select formControlName="region" [(value)]="selectedRegion">
             <mat-option>None</mat-option>
             <mat-option value="Port Louis">Port Louis</mat-option>
             <mat-option value="CurePipe">CurePipe</mat-option>
@@ -287,7 +294,7 @@
           </mat-select>
         </mat-form-field>
         <mat-card-actions>
-          <button mat-raised-button id="create" color="primary"
+          <button mat-raised-button id="create" color="primary" [disabled]="customerForm.invalid"
                   (click)="submit()">Create Transaction
           </button>
           <button mat-raised-button id="clear" color="primary" (click)="clearForm()">Clear</button>

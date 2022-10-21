@@ -22,6 +22,7 @@ export class CustomerFormComponent implements OnInit {
   customer: Customer;
   transactions: Transaction[];
   transaction: Transaction;
+  selectedRegion: any;
 
   constructor(private router: Router,
               private customerServiceService: CustomerServiceService,
@@ -35,7 +36,7 @@ export class CustomerFormComponent implements OnInit {
     this.createForm();
   }
 
-  getAllCustomers () {
+  getAllCustomers() {
     this.customerServiceService.getCustomers().subscribe(value => {
       this.transactions = value;
     });
@@ -50,17 +51,17 @@ export class CustomerFormComponent implements OnInit {
 
   private createForm() {
     this.customerForm = new FormGroup({
-      references: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
-      customerNumber: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
-      customerName: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
-      address: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
-      phone: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
-      amount: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required]),
+      reference: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      customerNumber: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      customerName: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      address: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      phone: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      amount: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
       currency: new FormControl('', Validators.required),
-      bank: this.formBuilder.array([this.formBuilder.control(null)],[Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
-      accountNumber: this.formBuilder.array([this.formBuilder.control(null)]),
-      paymentDetails: this.formBuilder.array([this.formBuilder.control(null)], [Validators.required, Validators.pattern('^[a-zA-Z ]*$')]),
-      creditDebitDetails: this.formBuilder.array([this.formBuilder.control(null)]),
+      bank: this.formBuilder.array([this.formBuilder.control(null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')])]),
+      accountNumber: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      paymentDetails: this.formBuilder.array([this.formBuilder.control(null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')])]),
+      creditDebitDetails: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
       selected: new FormControl('New'),
       region: new FormControl('None'),
     });
@@ -72,25 +73,29 @@ export class CustomerFormComponent implements OnInit {
 
   clearForm() {
     this.customerForm.reset();
+    this.customerForm.clearValidators();
+    this.customerForm.patchValue({
+      selected: 'New'
+    });
   }
 
   addReference(): void {
-    (this.customerForm.get('references') as FormArray).push(
-      this.formBuilder.control(null)
+    (this.customerForm.get('reference') as FormArray).push(
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
   removeReference(index) {
-    (this.customerForm.get('references') as FormArray).removeAt(index);
+    (this.customerForm.get('reference') as FormArray).removeAt(index);
   }
 
   getReferencesFormControls(): AbstractControl[] {
-    return (<FormArray> this.customerForm.get('references')).controls
+    return (this.customerForm.get('reference') as FormArray).controls;
   }
 
   patchForm(transaction: Transaction) {
     this.customerForm.patchValue({
-      references: [transaction.reference],
+      reference: [transaction.reference],
       customerNumber: [transaction.customerNumber],
       customerName: [transaction.customerName],
       address: [transaction.address],
@@ -107,7 +112,7 @@ export class CustomerFormComponent implements OnInit {
   }
 
   getCustomerNumberFormControls() {
-    return (<FormArray> this.customerForm.get('customerNumber')).controls
+    return (this.customerForm.get('customerNumber') as FormArray).controls;
 
   }
 
@@ -118,17 +123,17 @@ export class CustomerFormComponent implements OnInit {
 
   addCustomerNumber() {
     (this.customerForm.get('customerNumber') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
   getCustomerNameFormControls() {
-    return (<FormArray> this.customerForm.get('customerName')).controls
+    return (this.customerForm.get('customerName') as FormArray).controls;
 
   }
 
   getAddressesFormControls() {
-    return (<FormArray> this.customerForm.get('address')).controls
+    return (this.customerForm.get('address') as FormArray).controls;
 
   }
 
@@ -139,12 +144,12 @@ export class CustomerFormComponent implements OnInit {
 
   addAddress() {
     (this.customerForm.get('address') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
   getPhonesFormControls() {
-    return (<FormArray> this.customerForm.get('phone')).controls
+    return (this.customerForm.get('phone') as FormArray).controls;
 
   }
 
@@ -155,12 +160,12 @@ export class CustomerFormComponent implements OnInit {
 
   addPhone() {
     (this.customerForm.get('phone') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
   getAmountsFormControls() {
-    return (<FormArray> this.customerForm.get('amount')).controls
+    return (this.customerForm.get('amount') as FormArray).controls;
 
   }
 
@@ -171,12 +176,12 @@ export class CustomerFormComponent implements OnInit {
 
   addAmount() {
     (this.customerForm.get('amount') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
   getBanksFormControls() {
-    return (<FormArray> this.customerForm.get('bank')).controls
+    return (this.customerForm.get('bank') as FormArray).controls;
 
   }
 
@@ -187,12 +192,12 @@ export class CustomerFormComponent implements OnInit {
 
   addBank() {
     (this.customerForm.get('bank') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')])
     );
   }
 
   getAccountNumbersFormControls() {
-    return (<FormArray> this.customerForm.get('accountNumber')).controls
+    return (this.customerForm.get('accountNumber') as FormArray).controls;
 
   }
 
@@ -203,7 +208,7 @@ export class CustomerFormComponent implements OnInit {
 
   addAccountNumber() {
     (this.customerForm.get('accountNumber') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
@@ -214,23 +219,23 @@ export class CustomerFormComponent implements OnInit {
 
   addPaymentDetails() {
     (this.customerForm.get('paymentDetails') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')])
     );
   }
 
   getPaymentDetailsFormControls() {
-    return (<FormArray> this.customerForm.get('paymentDetails')).controls
+    return (this.customerForm.get('paymentDetails') as FormArray).controls;
 
   }
 
   getCreditDebitDetailsFormControls() {
-    return (<FormArray> this.customerForm.get('creditDebitDetails')).controls
+    return (this.customerForm.get('creditDebitDetails') as FormArray).controls;
 
   }
 
   addCreditDebitDetails() {
     (this.customerForm.get('creditDebitDetails') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 
@@ -246,7 +251,7 @@ export class CustomerFormComponent implements OnInit {
 
   addCustomerNames() {
     (this.customerForm.get('customerNames') as FormArray).push(
-      this.formBuilder.control(null)
+      this.formBuilder.control(null, [Validators.required])
     );
   }
 }
