@@ -7,7 +7,6 @@ import { TRANSACTIONS } from './db.data';
 })
 export class FakeApiService implements InMemoryDbService {
 
-
   createDb(): { transactions: Transaction[] } {
     const transactions = TRANSACTIONS.map(({reference,
                                                   customerNumber,
@@ -35,13 +34,11 @@ export class FakeApiService implements InMemoryDbService {
       creditDebitDetails,
       selected,
       region,
-
-    }))
+    }));
     return {
       transactions
     };
   }
-
 
   get(ri: RequestInfo) {
     // if client pinged "api/auth/logout" then send OK status
@@ -49,7 +46,6 @@ export class FakeApiService implements InMemoryDbService {
       const { headers, url } = ri;
       return ri.utils.createResponse$(() => ({ status: 200, headers, url }));
     }
-
 
     //  otherwise default response of In-memory DB
     return undefined;

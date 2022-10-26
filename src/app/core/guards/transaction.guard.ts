@@ -6,8 +6,7 @@ import {AuthService} from '../services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate {
-
+export class TransactionGuard implements CanActivate {
   constructor(private router: Router, private authService: AuthService) {
   }
 
@@ -15,15 +14,12 @@ export class AuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const currentUser = this.authService.getCurrentUser();
-    if (currentUser && currentUser.username) {
-      if (currentUser.isAdmin) {
-        return true;
-      }
-      this.router.navigate(['accessdenied']);
-      return false;
+
+    if (currentUser) {
+      return true;
     }
 
-    this.router.navigate(['../', 'auth', 'login']);
+    this.router.navigate(['accessdenied']);
     return false;
   }
 

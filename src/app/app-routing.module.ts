@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import {Role} from './shared/constants/role';
 import {AuthGuard} from './core/guards/auth.guard';
+import {TransactionGuard} from './core/guards/transaction.guard';
 
 const routes: Routes = [
   {
@@ -15,6 +16,7 @@ const routes: Routes = [
   },
   {
     path: 'transaction',
+    canActivate: [TransactionGuard],
     loadChildren: () => import('./features/transaction/transaction.module').then(m => m.TransactionModule),
   },
   {

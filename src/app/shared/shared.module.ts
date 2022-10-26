@@ -19,9 +19,10 @@ import {MatInputModule} from '@angular/material/input';
 import {MatTableModule} from '@angular/material/table';
 import {ReactiveFormsModule} from '@angular/forms';
 import {MatRadioModule} from '@angular/material/radio';
+import { TransactionDeniedComponent } from './transaction-denied/transaction-denied.component';
 
 @NgModule({
-  declarations: [NavComponent, AccessDeniedComponent, CustomerFormComponent, TableComponent],
+  declarations: [NavComponent, AccessDeniedComponent, CustomerFormComponent, TableComponent, TransactionDeniedComponent],
   exports: [
     NavComponent
   ],

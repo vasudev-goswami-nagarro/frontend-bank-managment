@@ -29,11 +29,11 @@
       <div class="spacer"></div>
 
       <div *ngIf="!(isHandset$ | async)">
-        <a mat-button routerLink="transaction/home">Transaction-Home</a>
-        <a mat-button routerLink="customer-form">Customer Form</a>
-        <a mat-button routerLink="table">Table</a>
-        <a mat-button routerLink="admin">User Profile</a>
-        <a mat-raised-button color="accent" (click)="logout()" *ngIf="isLoggedIn$ | async as isLoggedIn;else other">Log Out</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="transaction/home">Transaction-Home</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="customer-form"> Customer Form</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="table"> Table</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="admin"> User Profile</a>
+        <a mat-raised-button color="accent" class="example-button-row" (click)="logout()" *ngIf="isLoggedIn$ | async as isLoggedIn;else other">Log Out</a>
       </div>
 
       <ng-template #other>

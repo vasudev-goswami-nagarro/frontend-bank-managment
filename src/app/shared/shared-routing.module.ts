@@ -9,7 +9,8 @@ const routes: Routes = [
   {path: 'table', component: TableComponent},
   {path: 'customer-form', component: CustomerFormComponent},
   {
-    path: 'accessdenied', component: AccessDeniedComponent
+    path: 'accessdenied', component: AccessDeniedComponent,
+    
   }
 ];
 
