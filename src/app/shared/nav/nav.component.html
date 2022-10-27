@@ -29,10 +29,10 @@
       <div class="spacer"></div>
 
       <div *ngIf="!(isHandset$ | async)">
-        <a mat-raised-button color="primary" class="example-button-row" routerLink="transaction/home">Transaction-Home</a>
-        <a mat-raised-button color="primary" class="example-button-row" routerLink="customer-form"> Customer Form</a>
-        <a mat-raised-button color="primary" class="example-button-row" routerLink="table"> Table</a>
-        <a mat-raised-button color="primary" class="example-button-row" routerLink="admin"> User Profile</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="transaction/home" routerLinkActive="active">Transaction-Home</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="customer-form" routerLinkActive="active"> Customer Form</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="table" routerLinkActive="active"> Table</a>
+        <a mat-raised-button color="primary" class="example-button-row" routerLink="admin" routerLinkActive="active"> User Profile</a>
         <a mat-raised-button color="accent" class="example-button-row" (click)="logout()" *ngIf="isLoggedIn$ | async as isLoggedIn;else other">Log Out</a>
       </div>
 
