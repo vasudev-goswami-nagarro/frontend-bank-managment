@@ -4,9 +4,9 @@
     <div class="col-sm-6">
       <mat-card class="container">
 
-        <h4>List of customers</h4>
+        <h2>List of customers</h2>
         <mat-form-field appearance="fill">
-          <mat-label>Customers</mat-label>
+          <mat-label>Select a customer</mat-label>
           <mat-select [(value)]="selectedCustomerNumber"
                       (selectionChange)="getTransactionByReferenceNumber(selectedCustomerNumber)">
             <mat-option *ngFor="let txn of transactions" [value]="txn.customerNumber">
@@ -22,8 +22,8 @@
         <mat-card-content>
 
           <mat-radio-group aria-label="Select an option" formControlName="selected">
-            <mat-radio-button value="New" (change)="clearForm()">New</mat-radio-button>
-            <mat-radio-button value="Existing"> Existing</mat-radio-button>
+            <mat-radio-button value="New" (change)="createNewForm()" [checked]="isNewForm">New</mat-radio-button>
+            <mat-radio-button value="Existing" (change)="createExistingForm()" [checked]="!isNewForm"> Existing</mat-radio-button>
           </mat-radio-group>
 
           <section>
@@ -297,7 +297,7 @@
           <button mat-raised-button id="create" color="primary" [disabled]="customerForm.invalid"
                   (click)="submit()">Create Transaction
           </button>
-          <button mat-raised-button id="clear" color="primary" (click)="clearForm()">Clear</button>
+          <button mat-raised-button id="clear" color="primary" (click)="createNewForm()">Reset fields</button>
         </mat-card-actions>
         <br>
       </mat-card>

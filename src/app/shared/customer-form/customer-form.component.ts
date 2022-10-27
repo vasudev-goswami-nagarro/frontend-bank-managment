@@ -15,14 +15,13 @@ export class CustomerFormComponent implements OnInit {
 
 
   customerForm!: FormGroup;
-  loading!: boolean;
   selected = 'New';
   selectedCustomerNumber: string;
-  customers: Customer[];
   customer: Customer;
   transactions: Transaction[];
   transaction: Transaction;
   selectedRegion: any;
+  isNewForm = true;
 
   constructor(private router: Router,
               private customerServiceService: CustomerServiceService,
@@ -33,7 +32,7 @@ export class CustomerFormComponent implements OnInit {
   ngOnInit() {
     this.getAllCustomers();
     this.titleService.setTitle('Customer form');
-    this.createForm();
+    this.createNewForm();
   }
 
   getAllCustomers() {
@@ -43,13 +42,14 @@ export class CustomerFormComponent implements OnInit {
   }
 
   getTransactionByReferenceNumber(customerNumber: string) {
+    this.createExistingForm();
     this.customerServiceService.getCustomerByNumber(customerNumber).subscribe(value => {
       this.transaction = value[0];
       this.patchForm(this.transaction);
     });
   }
 
-  private createForm() {
+  createExistingForm() {
     this.customerForm = new FormGroup({
       reference: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
       customerNumber: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
@@ -62,21 +62,34 @@ export class CustomerFormComponent implements OnInit {
       accountNumber: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
       paymentDetails: this.formBuilder.array([this.formBuilder.control(null, [Validators.required, Validators.pattern('^[a-zA-Z ]*$')])]),
       creditDebitDetails: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
-      selected: new FormControl('New'),
+      selected: new FormControl('Existing'),
       region: new FormControl('None'),
     });
+    this.isNewForm = false;
   }
 
   submit() {
     console.log(this.customerForm.getRawValue());
   }
 
-  clearForm() {
-    this.customerForm.reset();
-    this.customerForm.clearValidators();
-    this.customerForm.patchValue({
-      selected: 'New'
+  createNewForm() {
+    this.customerForm = new FormGroup({
+      reference: this.formBuilder.array([this.formBuilder.control(null)]),
+      customerNumber: this.formBuilder.array([this.formBuilder.control({value: '', disabled: true})]),
+      customerName: this.formBuilder.array([this.formBuilder.control(null, [Validators.required])]),
+      address: this.formBuilder.array([this.formBuilder.control(null)]),
+      phone: this.formBuilder.array([this.formBuilder.control(null)]),
+      amount: this.formBuilder.array([this.formBuilder.control(null)]),
+      currency: new FormControl(''),
+      bank: this.formBuilder.array([this.formBuilder.control(null)]),
+      accountNumber: this.formBuilder.array([this.formBuilder.control(null)]),
+      paymentDetails: this.formBuilder.array([this.formBuilder.control(null)]),
+      creditDebitDetails: this.formBuilder.array([this.formBuilder.control(null)]),
+      selected: new FormControl({value: 'New'}),
+      region: new FormControl('None'),
     });
+    this.customerForm.reset();
+    this.isNewForm = true;
   }
 
   addReference(): void {
