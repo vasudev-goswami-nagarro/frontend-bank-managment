@@ -18,3 +18,5 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 ![login-page](/src/assets/img.png?raw=true "home page")
 ![login-page](/src/assets/img_1.png?raw=true "login page")
 ![login-page](/src/assets/img_2.png?raw=true "transaction page")
+![login-page](/src/assets/img_3.png?raw=true "customer form")
+![login-page](/src/assets/img_4.png?raw=true "customer form")
