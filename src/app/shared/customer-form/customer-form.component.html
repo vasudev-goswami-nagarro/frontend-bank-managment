@@ -1,307 +1,321 @@
-<div class="container customer-edit-container">
-  <form [formGroup]="customerForm">
+<div class="align-items-center h-50">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-5">
+        <div class="container">
+          <form [formGroup]="customerForm" style="width: 299px">
 
-    <div class="col-sm-6">
-      <mat-card class="container">
+            <mat-card>
 
-        <h2>List of customers</h2>
-        <mat-form-field appearance="fill">
-          <mat-label>Select a customer</mat-label>
-          <mat-select [(value)]="selectedCustomerNumber"
-                      (selectionChange)="getTransactionByReferenceNumber(selectedCustomerNumber)">
-            <mat-option *ngFor="let txn of transactions" [value]="txn.customerNumber">
-              {{txn.customerNumber}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <br>
-        <hr>
-        <mat-card-title>Customer Form</mat-card-title>
-        <br>
-        <mat-card-content>
-
-          <mat-radio-group aria-label="Select an option" formControlName="selected">
-            <mat-radio-button value="New" (change)="createNewForm()" [checked]="isNewForm">New</mat-radio-button>
-            <mat-radio-button value="Existing" (change)="createExistingForm()" [checked]="!isNewForm"> Existing</mat-radio-button>
-          </mat-radio-group>
-
-          <section>
-            <div *ngFor="let reference of getReferencesFormControls(); let i = index">
-              <mat-form-field>
-                <input id="referenceInput" matInput placeholder="References"
-                       [formControl]="reference"
-                       autocomplete="reference"
-                       type="reference">
-                <mat-error id="invalidReferenceError" *ngIf="customerForm.controls['reference'].hasError('reference')">
-                  Please enter a valid reference
-                </mat-error>
-                <mat-error id="requiredReferenceError" *ngIf="customerForm.controls['reference'].hasError('required')">
-                  Reference is
-                  <strong>required</strong>
-                </mat-error>
-              </mat-form-field>
-              <a mat-mini-fab (click)="removeReference(i)">
-                <mat-icon>delete</mat-icon>
-              </a>
-              <a mat-mini-fab (click)="addReference()">
-                <mat-icon>library_add</mat-icon>
-              </a>
-            </div>
-          </section>
-
-          <section>
-            <div *ngFor="let customerNumber of getCustomerNumberFormControls(); let i = index">
-              <mat-form-field class="full-width">
-                <input id="customerNumberInput" matInput placeholder="Customer Number"
-                       type="customerNumber"
-                       [formControl]="customerNumber"
-                       autocomplete="current-customerNumber">
-                <mat-error id="requiredCustomerNumberError"
-                           *ngIf="customerForm.controls['customerNumber'].hasError('required')">
-                  Customer Number is
-                  <strong>required</strong>
-                </mat-error>
+              <h2>List of customers</h2>
+              <mat-form-field appearance="fill">
+                <mat-label>Select a customer</mat-label>
+                <mat-select [(value)]="selectedCustomerNumber"
+                            (selectionChange)="getTransactionByReferenceNumber(selectedCustomerNumber)">
+                  <mat-option *ngFor="let txn of transactions" [value]="txn.customerNumber">
+                    {{txn.customerNumber}}
+                  </mat-option>
+                </mat-select>
               </mat-form-field>
 
-              <a mat-mini-fab (click)="removeCustomerNumber(i)">
-                <mat-icon>delete</mat-icon>
-              </a>
-              <a mat-mini-fab (click)="addCustomerNumber()">
-                <mat-icon>library_add</mat-icon>
-              </a>
-            </div>
-          </section>
-        </mat-card-content>
+              <br>
+              <hr>
+              <mat-card-title>Customer Form</mat-card-title>
+              <br>
+              <mat-card-content>
 
-        <section>
-          <div *ngFor="let ref of getCustomerNameFormControls(); let i = index">
-            <mat-form-field class="full-width">
-              <input id="customerNameInput" matInput placeholder="Customer Name"
-                     [formControl]="ref"
-                     autocomplete="customerName"
-                     type="customerName">
-              <mat-error id="invalidCustomerNameError"
-                         *ngIf="customerForm.controls['customerName'].hasError('customerName')">
-                Please enter a valid customerName
-              </mat-error>
-              <mat-error id="requiredCustomerNameError" *ngIf="customerForm.controls['customerName'].hasError('required')">
-                CustomerName is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeCustomerNames(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addCustomerNames()">
-              <mat-icon>library_add</mat-icon>
-            </a>
-          </div>
-        </section>
+                <mat-radio-group aria-label="Select an option" formControlName="selected">
+                  <mat-radio-button value="New" (change)="createNewForm()" [checked]="isNewForm">New</mat-radio-button>
+                  <mat-radio-button value="Existing" (change)="createExistingForm()" [checked]="!isNewForm"> Existing
+                  </mat-radio-button>
+                </mat-radio-group>
 
-        <section *ngIf="selectedRegion !== 'Port Mathurin'">
-          <div *ngFor="let ref of getAddressesFormControls(); let i = index">
-            <mat-form-field class="full-width">
-              <input id="addressInput" matInput placeholder="Address"  [formControl]="ref" autocomplete="address"
-                     type="address">
-              <mat-error id="invalidAddressError" *ngIf="customerForm.controls['address'].hasError('address')">
-                Please enter a valid address
-              </mat-error>
-              <mat-error id="requiredAddressError" *ngIf="customerForm.controls['address'].hasError('required')">
-                Address is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeAddress(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addAddress()">
-              <mat-icon>library_add</mat-icon>
-            </a>
-          </div>
-        </section>
+                <section>
+                  <div *ngFor="let reference of getReferencesFormControls(); let i = index">
+                    <mat-form-field>
+                      <input id="referenceInput" matInput placeholder="References"
+                             [formControl]="reference"
+                             autocomplete="reference"
+                             type="reference">
+                      <mat-error id="invalidReferenceError"
+                                 *ngIf="customerForm.controls['reference'].hasError('reference')">
+                        Please enter a valid reference
+                      </mat-error>
+                      <mat-error id="requiredReferenceError"
+                                 *ngIf="customerForm.controls['reference'].hasError('required')">
+                        Reference is
+                        <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
+                    <a mat-mini-fab (click)="removeReference(i)">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <a mat-mini-fab (click)="addReference()">
+                      <mat-icon>library_add</mat-icon>
+                    </a>
+                  </div>
+                </section>
 
-        <section>
-          <div *ngFor="let ref of getPhonesFormControls(); let i = index">
-            <mat-form-field class="full-width">
-              <input id="phoneInput" matInput placeholder="Phone"  [formControl]="ref" autocomplete="phone"
-                     type="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-              <mat-error id="invalidPhoneError" *ngIf="customerForm.controls['phone'].hasError('phone')">
-                Please enter a valid phone number
-              </mat-error>
-              <mat-error id="requiredPhoneError" *ngIf="customerForm.controls['phone'].hasError('required')">
-                Phone is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removePhone(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addPhone()">
-              <mat-icon>library_add</mat-icon>
-            </a>
+                <section>
+                  <div *ngFor="let customerNumber of getCustomerNumberFormControls(); let i = index">
+                    <mat-form-field>
+                      <input id="customerNumberInput" matInput placeholder="Customer Number"
+                             type="customerNumber"
+                             [formControl]="customerNumber"
+                             autocomplete="current-customerNumber">
+                      <mat-error id="requiredCustomerNumberError"
+                                 *ngIf="customerForm.controls['customerNumber'].hasError('required')">
+                        Customer Number is
+                        <strong>required</strong>
+                      </mat-error>
+                    </mat-form-field>
 
-          </div>
-        </section>
+                    <a mat-mini-fab (click)="removeCustomerNumber(i)">
+                      <mat-icon>delete</mat-icon>
+                    </a>
+                    <a mat-mini-fab (click)="addCustomerNumber()">
+                      <mat-icon>library_add</mat-icon>
+                    </a>
+                  </div>
+                </section>
+              </mat-card-content>
 
-        <section>
-          <div *ngFor="let ref of getAmountsFormControls(); let i = index">
-            <mat-form-field class="full-width">
-              <input id="amountInput" matInput placeholder="Amount"
-                     [formControl]="ref"
-                     autocomplete="amount"
-                     type="amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-              <mat-error id="invalidAmountError" *ngIf="customerForm.controls['amount'].hasError('amount')">
-                Please enter a valid amount
-              </mat-error>
-              <mat-error id="requiredAmountError" *ngIf="customerForm.controls['amount'].hasError('required')">
-                Amount is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeAmount(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addAmount()">
-              <mat-icon>library_add</mat-icon>
-            </a>
-          </div>
-        </section>
+              <section>
+                <div *ngFor="let ref of getCustomerNameFormControls(); let i = index">
+                  <mat-form-field>
+                    <input id="customerNameInput" matInput placeholder="Customer Name"
+                           [formControl]="ref"
+                           autocomplete="customerName"
+                           type="customerName">
+                    <mat-error id="invalidCustomerNameError"
+                               *ngIf="customerForm.controls['customerName'].hasError('customerName')">
+                      Please enter a valid customerName
+                    </mat-error>
+                    <mat-error id="requiredCustomerNameError"
+                               *ngIf="customerForm.controls['customerName'].hasError('required')">
+                      CustomerName is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeCustomerNames(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addCustomerNames()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+                </div>
+              </section>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Currency</mat-label>
-          <mat-select formControlName="currency">
-            <mat-option>None</mat-option>
-            <mat-option value="AED">AED</mat-option>
-            <mat-option value="EUR">EUR</mat-option>
-            <mat-option value="CHF">CHF</mat-option>
-            <mat-option value="MUR">MUR</mat-option>
-            <mat-option value="USD">USD</mat-option>
-          </mat-select>
-        </mat-form-field>
+              <section *ngIf="selectedRegion !== 'Port Mathurin'">
+                <div *ngFor="let ref of getAddressesFormControls(); let i = index">
+                  <mat-form-field>
+                    <input id="addressInput" matInput placeholder="Address" [formControl]="ref" autocomplete="address"
+                           type="address">
+                    <mat-error id="invalidAddressError" *ngIf="customerForm.controls['address'].hasError('address')">
+                      Please enter a valid address
+                    </mat-error>
+                    <mat-error id="requiredAddressError" *ngIf="customerForm.controls['address'].hasError('required')">
+                      Address is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeAddress(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addAddress()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+                </div>
+              </section>
 
-        <section>
-          <div *ngFor="let ref of getBanksFormControls(); let i = index">
+              <section>
+                <div *ngFor="let ref of getPhonesFormControls(); let i = index">
+                  <mat-form-field>
+                    <input id="phoneInput" matInput placeholder="Phone" [formControl]="ref" autocomplete="phone"
+                           type="phone"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    <mat-error id="invalidPhoneError" *ngIf="customerForm.controls['phone'].hasError('phone')">
+                      Please enter a valid phone number
+                    </mat-error>
+                    <mat-error id="requiredPhoneError" *ngIf="customerForm.controls['phone'].hasError('required')">
+                      Phone is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removePhone(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addPhone()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
 
-            <mat-form-field class="full-width">
-              <input id="bankInput" matInput placeholder="Bank"  [formControl]="ref" autocomplete="bank"
-                     type="bank">
-              <mat-error id="invalidBankError" *ngIf="customerForm.controls['bank'].hasError('bank')">
-                Please enter a valid bank address
-              </mat-error>
-              <mat-error id="requiredBankError" *ngIf="customerForm.controls['bank'].hasError('required')">
-                Bank is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeBank(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addBank()">
-              <mat-icon>library_add</mat-icon>
-            </a>
+                </div>
+              </section>
 
-          </div>
-        </section>
+              <section>
+                <div *ngFor="let ref of getAmountsFormControls(); let i = index">
+                  <mat-form-field>
+                    <input id="amountInput" matInput placeholder="Amount"
+                           [formControl]="ref"
+                           autocomplete="amount"
+                           type="amount"
+                           oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                    <mat-error id="invalidAmountError" *ngIf="customerForm.controls['amount'].hasError('amount')">
+                      Please enter a valid amount
+                    </mat-error>
+                    <mat-error id="requiredAmountError" *ngIf="customerForm.controls['amount'].hasError('required')">
+                      Amount is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeAmount(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addAmount()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+                </div>
+              </section>
 
-        <section>
-          <div *ngFor="let ref of getAccountNumbersFormControls(); let i = index">
-            <mat-form-field class="full-width">
-              <input id="accountNumberInput" matInput placeholder="AccountNumber"
-                     [formControl]="ref"
-                     autocomplete="accountNumber"
-                     type="accountNumber">
-              <mat-error id="invalidAccountNumberError"
-                         *ngIf="customerForm.controls['accountNumber'].hasError('accountNumber')">
-                Please enter a valid account number
-              </mat-error>
-              <mat-error id="requiredAccountNumberError"
-                         *ngIf="customerForm.controls['accountNumber'].hasError('required')">
-                AccountNumber is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeAccountNumber(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addAccountNumber()">
-              <mat-icon>library_add</mat-icon>
-            </a>
-          </div>
-        </section>
+              <mat-form-field appearance="fill">
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="currency">
+                  <mat-option>None</mat-option>
+                  <mat-option value="AED">AED</mat-option>
+                  <mat-option value="EUR">EUR</mat-option>
+                  <mat-option value="CHF">CHF</mat-option>
+                  <mat-option value="MUR">MUR</mat-option>
+                  <mat-option value="USD">USD</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <section>
-          <div *ngFor="let ref of getPaymentDetailsFormControls(); let i = index">
+              <section>
+                <div *ngFor="let ref of getBanksFormControls(); let i = index">
 
-            <mat-form-field class="full-width">
-              <input id="paymentDetailsInput" matInput placeholder="PaymentDetails"  [formControl]="ref"
-                     autocomplete="paymentDetails"
-                     type="paymentDetails">
-              <mat-error id="invalidPaymentDetailsError"
-                         *ngIf="customerForm.controls['paymentDetails'].hasError('paymentDetails')">
-                Please enter a valid payment details
-              </mat-error>
-              <mat-error id="requiredPaymentDetailsError"
-                         *ngIf="customerForm.controls['paymentDetails'].hasError('required')">
-                PaymentDetails is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removePaymentDetails(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addPaymentDetails()">
-              <mat-icon>library_add</mat-icon>
-            </a>
+                  <mat-form-field>
+                    <input id="bankInput" matInput placeholder="Bank" [formControl]="ref" autocomplete="bank"
+                           type="bank">
+                    <mat-error id="invalidBankError" *ngIf="customerForm.controls['bank'].hasError('bank')">
+                      Please enter a valid bank address
+                    </mat-error>
+                    <mat-error id="requiredBankError" *ngIf="customerForm.controls['bank'].hasError('required')">
+                      Bank is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeBank(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addBank()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
 
-          </div>
-        </section>
+                </div>
+              </section>
 
-        <section>
-          <div *ngFor="let ref of getCreditDebitDetailsFormControls(); let i = index">
+              <section>
+                <div *ngFor="let ref of getAccountNumbersFormControls(); let i = index">
+                  <mat-form-field>
+                    <input id="accountNumberInput" matInput placeholder="AccountNumber"
+                           [formControl]="ref"
+                           autocomplete="accountNumber"
+                           type="accountNumber">
+                    <mat-error id="invalidAccountNumberError"
+                               *ngIf="customerForm.controls['accountNumber'].hasError('accountNumber')">
+                      Please enter a valid account number
+                    </mat-error>
+                    <mat-error id="requiredAccountNumberError"
+                               *ngIf="customerForm.controls['accountNumber'].hasError('required')">
+                      AccountNumber is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeAccountNumber(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addAccountNumber()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+                </div>
+              </section>
 
-            <mat-form-field class="full-width">
-              <input id="creditDebitDetailsInput" matInput placeholder="CreditDebitCardDetails"
-                     [formControl]="ref" autocomplete="creditDebitDetails"
-                     type="creditDebitDetails">
-              <mat-error id="invalidCreditDebitCardDetailsError"
-                         *ngIf="customerForm.controls['creditDebitDetails'].hasError('creditDebitDetails')">
-                Please enter a valid creditDebitDetails address
-              </mat-error>
-              <mat-error id="requiredCreditDebitCardDetailsError"
-                         *ngIf="customerForm.controls['creditDebitDetails'].hasError('required')">
-                Credit/Debit card details is
-                <strong>required</strong>
-              </mat-error>
-            </mat-form-field>
-            <a mat-mini-fab (click)="removeCreditDebitDetails(i)">
-              <mat-icon>delete</mat-icon>
-            </a>
-            <a mat-mini-fab (click)="addCreditDebitDetails()">
-              <mat-icon>library_add</mat-icon>
-            </a>
-          </div>
-        </section>
+              <section>
+                <div *ngFor="let ref of getPaymentDetailsFormControls(); let i = index">
 
-        <mat-form-field appearance="fill">
-          <mat-label>Region</mat-label>
-          <mat-select formControlName="region" [(value)]="selectedRegion">
-            <mat-option>None</mat-option>
-            <mat-option value="Port Louis">Port Louis</mat-option>
-            <mat-option value="CurePipe">CurePipe</mat-option>
-            <mat-option value="Vacoas">Vacoas</mat-option>
-            <mat-option value="Port Mathurin">Port Mathurin</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-card-actions>
-          <button mat-raised-button id="create" color="primary" [disabled]="customerForm.invalid"
-                  (click)="submit()">Create Transaction
-          </button>
-          <button mat-raised-button id="clear" color="primary" (click)="createNewForm()">Reset fields</button>
-        </mat-card-actions>
-        <br>
-      </mat-card>
+                  <mat-form-field>
+                    <input id="paymentDetailsInput" matInput placeholder="PaymentDetails" [formControl]="ref"
+                           autocomplete="paymentDetails"
+                           type="paymentDetails">
+                    <mat-error id="invalidPaymentDetailsError"
+                               *ngIf="customerForm.controls['paymentDetails'].hasError('paymentDetails')">
+                      Please enter a valid payment details
+                    </mat-error>
+                    <mat-error id="requiredPaymentDetailsError"
+                               *ngIf="customerForm.controls['paymentDetails'].hasError('required')">
+                      PaymentDetails is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removePaymentDetails(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addPaymentDetails()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+
+                </div>
+              </section>
+
+              <section>
+                <div *ngFor="let ref of getCreditDebitDetailsFormControls(); let i = index">
+
+                  <mat-form-field>
+                    <input id="creditDebitDetailsInput" matInput placeholder="CreditDebitCardDetails"
+                           [formControl]="ref" autocomplete="creditDebitDetails"
+                           type="creditDebitDetails">
+                    <mat-error id="invalidCreditDebitCardDetailsError"
+                               *ngIf="customerForm.controls['creditDebitDetails'].hasError('creditDebitDetails')">
+                      Please enter a valid creditDebitDetails address
+                    </mat-error>
+                    <mat-error id="requiredCreditDebitCardDetailsError"
+                               *ngIf="customerForm.controls['creditDebitDetails'].hasError('required')">
+                      Credit/Debit card details is
+                      <strong>required</strong>
+                    </mat-error>
+                  </mat-form-field>
+                  <a mat-mini-fab (click)="removeCreditDebitDetails(i)">
+                    <mat-icon>delete</mat-icon>
+                  </a>
+                  <a mat-mini-fab (click)="addCreditDebitDetails()">
+                    <mat-icon>library_add</mat-icon>
+                  </a>
+                </div>
+              </section>
+
+              <mat-form-field appearance="fill">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="region" [(value)]="selectedRegion">
+                  <mat-option>None</mat-option>
+                  <mat-option value="Port Louis">Port Louis</mat-option>
+                  <mat-option value="CurePipe">CurePipe</mat-option>
+                  <mat-option value="Vacoas">Vacoas</mat-option>
+                  <mat-option value="Port Mathurin">Port Mathurin</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-card-actions>
+                <button mat-raised-button id="create" color="primary" [disabled]="customerForm.invalid"
+                        (click)="submit()">Create Transaction
+                </button>
+                <button mat-raised-button id="clear" color="primary" (click)="createNewForm()">Reset fields</button>
+              </mat-card-actions>
+              <br>
+            </mat-card>
+
+
+          </form>
+        </div>
+
+      </div>
     </div>
-
-  </form>
+  </div>
 </div>

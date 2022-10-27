@@ -1,175 +1,199 @@
-<div class="container transaction-edit-container">
-  <form [formGroup]="transactionForm">
+<div class="align-items-center h-50">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-5">
+        <div class="container transaction-edit-container">
+          <form [formGroup]="transactionForm">
+            <mat-card class="container">
+              <hr>
+              <mat-card-title>Create Transaction</mat-card-title>
+              <br>
+              <mat-card-content>
 
-    <div class="col-sm-5">
-      <mat-card class="container">
+                <mat-radio-group aria-label="Select an option" formControlName="selected">
+                  <mat-radio-button value="New" (change)="clearForm()">New</mat-radio-button>
+                  <mat-radio-button value="Existing"> Existing</mat-radio-button>
+                </mat-radio-group>
 
-        <hr>
-        <mat-card-title>Create Transaction</mat-card-title>
-        <br>
-        <mat-card-content>
+                <mat-form-field class="full-width">
+                  <input id="referenceInput" matInput placeholder="Reference" formControlName="reference"
+                         autocomplete="reference"
+                         type="reference">
+                  <mat-error id="invalidReferenceError"
+                             *ngIf="transactionForm.controls['reference'].hasError('reference')">
+                    Please enter a valid reference
+                  </mat-error>
+                  <mat-error id="requiredReferenceError"
+                             *ngIf="transactionForm.controls['reference'].hasError('required')">
+                    Reference is
+                    <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
 
-          <mat-radio-group aria-label="Select an option" formControlName="selected">
-            <mat-radio-button value="New" (change)="clearForm()">New </mat-radio-button>
-            <mat-radio-button value="Existing" > Existing</mat-radio-button>
-          </mat-radio-group>
+                <mat-form-field class="full-width">
+                  <input id="customerNumberInput" matInput placeholder="Customer Number"
+                         formControlName="customerNumber" type="customerNumber"
+                         autocomplete="current-customerNumber" (keyup.enter)="getCustomerByCustomerNumber()">
+                  <mat-error id="requiredCustomerNumberError"
+                             *ngIf="transactionForm.controls['reference'].hasError('required')">
+                    Customer Number is
+                    <strong>required</strong>
+                  </mat-error>
+                </mat-form-field>
+              </mat-card-content>
 
-          <mat-form-field class="full-width">
-            <input id="referenceInput" matInput placeholder="Reference" formControlName="reference" autocomplete="reference"
-                   type="reference">
-            <mat-error id="invalidReferenceError" *ngIf="transactionForm.controls['reference'].hasError('reference')">
-              Please enter a valid reference
-            </mat-error>
-            <mat-error id="requiredReferenceError" *ngIf="transactionForm.controls['reference'].hasError('required')">
-              Reference is
-              <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="customerNameInput" matInput placeholder="Customer Name" formControlName="customerName"
+                       autocomplete="customerName"
+                       type="customerName">
+                <mat-error id="invalidCustomerNameError"
+                           *ngIf="transactionForm.controls['customerName'].hasError('customerName')">
+                  Please enter a valid customerName address
+                </mat-error>
+                <mat-error id="requiredCustomerNameError"
+                           *ngIf="transactionForm.controls['customerName'].hasError('required')">
+                  CustomerName is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-          <mat-form-field class="full-width">
-            <input id="customerNumberInput" matInput placeholder="Customer Number"
-                   formControlName="customerNumber" type="customerNumber"
-                   autocomplete="current-customerNumber" (keyup.enter)="getCustomerByCustomerNumber()">
-            <mat-error id="requiredCustomerNumberError" *ngIf="transactionForm.controls['reference'].hasError('required')">
-              Customer Number is
-              <strong>required</strong>
-            </mat-error>
-          </mat-form-field>
-        </mat-card-content>
+              <mat-form-field class="full-width">
+                <input id="addressInput" matInput placeholder="Address" formControlName="address" autocomplete="address"
+                       type="address">
+                <mat-error id="invalidAddressError" *ngIf="transactionForm.controls['address'].hasError('address')">
+                  Please enter a valid address
+                </mat-error>
+                <mat-error id="requiredAddressError" *ngIf="transactionForm.controls['address'].hasError('required')">
+                  Address is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="customerNameInput" matInput placeholder="Customer Name" formControlName="customerName" autocomplete="customerName"
-                 type="customerName">
-          <mat-error id="invalidCustomerNameError" *ngIf="transactionForm.controls['customerName'].hasError('customerName')">
-            Please enter a valid customerName address
-          </mat-error>
-          <mat-error id="requiredCustomerNameError" *ngIf="transactionForm.controls['customerName'].hasError('required')">
-            CustomerName is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="phoneInput" matInput placeholder="Phone" formControlName="phone" autocomplete="phone"
+                       type="phone"
+                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                <mat-error id="invalidPhoneError" *ngIf="transactionForm.controls['phone'].hasError('phone')">
+                  Please enter a valid phone number
+                </mat-error>
+                <mat-error id="requiredPhoneError" *ngIf="transactionForm.controls['phone'].hasError('required')">
+                  Phone is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="addressInput" matInput placeholder="Address" formControlName="address" autocomplete="address"
-                 type="address">
-          <mat-error id="invalidAddressError" *ngIf="transactionForm.controls['address'].hasError('address')">
-            Please enter a valid address
-          </mat-error>
-          <mat-error id="requiredAddressError" *ngIf="transactionForm.controls['address'].hasError('required')">
-            Address is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="amountInput" matInput placeholder="Amount" formControlName="amount" autocomplete="amount"
+                       type="amount"
+                       oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
+                <mat-error id="invalidAmountError" *ngIf="transactionForm.controls['amount'].hasError('amount')">
+                  Please enter a valid amount
+                </mat-error>
+                <mat-error id="requiredAmountError" *ngIf="transactionForm.controls['amount'].hasError('required')">
+                  Amount is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="phoneInput" matInput placeholder="Phone" formControlName="phone" autocomplete="phone"
-                 type="phone" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-          <mat-error id="invalidPhoneError" *ngIf="transactionForm.controls['phone'].hasError('phone')">
-            Please enter a valid phone number
-          </mat-error>
-          <mat-error id="requiredPhoneError" *ngIf="transactionForm.controls['phone'].hasError('required')">
-            Phone is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Currency</mat-label>
+                <mat-select formControlName="currency">
+                  <mat-option>None</mat-option>
+                  <mat-option value="AED">AED</mat-option>
+                  <mat-option value="EUR">EUR</mat-option>
+                  <mat-option value="CHF">CHF</mat-option>
+                  <mat-option value="MUR">MUR</mat-option>
+                  <mat-option value="USD">USD</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="amountInput" matInput placeholder="Amount" formControlName="amount" autocomplete="amount"
-                 type="amount" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');">
-          <mat-error id="invalidAmountError" *ngIf="transactionForm.controls['amount'].hasError('amount')">
-            Please enter a valid amount
-          </mat-error>
-          <mat-error id="requiredAmountError" *ngIf="transactionForm.controls['amount'].hasError('required')">
-            Amount is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="bankInput" matInput placeholder="Bank" formControlName="bank" autocomplete="bank"
+                       type="bank">
+                <mat-error id="invalidBankError" *ngIf="transactionForm.controls['bank'].hasError('bank')">
+                  Please enter a valid bank address
+                </mat-error>
+                <mat-error id="invalidBankNameError" *ngIf="transactionForm.controls['bank'].hasError('pattern')">
+                  Only characters are allowed
+                </mat-error>
+                <mat-error id="requiredBankError" *ngIf="transactionForm.controls['bank'].hasError('required')">
+                  Bank is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field appearance="fill">
-          <mat-label>Currency</mat-label>
-          <mat-select formControlName="currency">
-            <mat-option>None</mat-option>
-            <mat-option value="AED">AED</mat-option>
-            <mat-option value="EUR">EUR</mat-option>
-            <mat-option value="CHF">CHF</mat-option>
-            <mat-option value="MUR">MUR</mat-option>
-            <mat-option value="USD">USD</mat-option>
-          </mat-select>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="accountNumberInput" matInput placeholder="AccountNumber" formControlName="accountNumber"
+                       autocomplete="accountNumber"
+                       type="accountNumber">
+                <mat-error id="invalidAccountNumberError"
+                           *ngIf="transactionForm.controls['accountNumber'].hasError('accountNumber')">
+                  Please enter a valid account number
+                </mat-error>
+                <mat-error id="requiredAccountNumberError"
+                           *ngIf="transactionForm.controls['accountNumber'].hasError('required')">
+                  AccountNumber is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="bankInput" matInput placeholder="Bank" formControlName="bank" autocomplete="bank"
-                 type="bank">
-          <mat-error id="invalidBankError" *ngIf="transactionForm.controls['bank'].hasError('bank')">
-            Please enter a valid bank address
-          </mat-error>
-          <mat-error id="invalidBankNameError" *ngIf="transactionForm.controls['bank'].hasError('pattern')">
-            Only characters are allowed
-          </mat-error>
-          <mat-error id="requiredBankError" *ngIf="transactionForm.controls['bank'].hasError('required')">
-            Bank is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="paymentDetailsInput" matInput placeholder="Payment Details" formControlName="paymentDetails"
+                       autocomplete="paymentDetails"
+                       type="paymentDetails">
+                <mat-error id="invalidPaymentDetailsError"
+                           *ngIf="transactionForm.controls['paymentDetails'].hasError('paymentDetails')">
+                  Please enter a valid payment details
+                </mat-error>
+                <mat-error id="invalidPaymentDetailsErrorChar"
+                           *ngIf="transactionForm.controls['paymentDetails'].hasError('pattern')">
+                  Only characters are allowed
+                </mat-error>
+                <mat-error id="requiredPaymentDetailsError"
+                           *ngIf="transactionForm.controls['paymentDetails'].hasError('required')">
+                  PaymentDetails is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="accountNumberInput" matInput placeholder="AccountNumber" formControlName="accountNumber" autocomplete="accountNumber"
-                 type="accountNumber">
-          <mat-error id="invalidAccountNumberError" *ngIf="transactionForm.controls['accountNumber'].hasError('accountNumber')">
-            Please enter a valid account number
-          </mat-error>
-          <mat-error id="requiredAccountNumberError" *ngIf="transactionForm.controls['accountNumber'].hasError('required')">
-            AccountNumber is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field class="full-width">
+                <input id="creditDebitDetailsInput" matInput placeholder="Credit/Debit Card Details"
+                       formControlName="creditDebitDetails" autocomplete="creditDebitDetails"
+                       type="creditDebitDetails">
+                <mat-error id="invalidCreditDebitCardDetailsError"
+                           *ngIf="transactionForm.controls['creditDebitDetails'].hasError('creditDebitDetails')">
+                  Please enter a valid creditDebitDetails address
+                </mat-error>
+                <mat-error id="requiredCreditDebitCardDetailsError"
+                           *ngIf="transactionForm.controls['creditDebitDetails'].hasError('required')">
+                  Credit/Debit card details is
+                  <strong>required</strong>
+                </mat-error>
+              </mat-form-field>
 
-        <mat-form-field class="full-width">
-          <input id="paymentDetailsInput" matInput placeholder="Payment Details" formControlName="paymentDetails" autocomplete="paymentDetails"
-                 type="paymentDetails">
-          <mat-error id="invalidPaymentDetailsError" *ngIf="transactionForm.controls['paymentDetails'].hasError('paymentDetails')">
-            Please enter a valid payment details
-          </mat-error>
-          <mat-error id="invalidPaymentDetailsErrorChar" *ngIf="transactionForm.controls['paymentDetails'].hasError('pattern')">
-            Only characters are allowed
-          </mat-error>
-          <mat-error id="requiredPaymentDetailsError" *ngIf="transactionForm.controls['paymentDetails'].hasError('required')">
-            PaymentDetails is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
+              <mat-form-field appearance="fill">
+                <mat-label>Region</mat-label>
+                <mat-select formControlName="region">
+                  <mat-option>None</mat-option>
+                  <mat-option value="Port Louis">Port Louis</mat-option>
+                  <mat-option value="CurePipe">CurePipe</mat-option>
+                  <mat-option value="Vacoas">Vacoas</mat-option>
+                  <mat-option value="Port Mathurin">Port Mathurin</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-card-actions>
+                <button mat-raised-button id="create" color="primary" [disabled]="transactionForm.invalid || loading"
+                        (click)="submit()">Create Transaction
+                </button>
+                <button mat-raised-button id="clear" color="primary" (click)="clearForm()">Clear</button>
+              </mat-card-actions>
+              <br>
+            </mat-card>
+            <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
+          </form>
+        </div>
 
-        <mat-form-field class="full-width">
-          <input id="creditDebitDetailsInput" matInput placeholder="Credit/Debit Card Details" formControlName="creditDebitDetails" autocomplete="creditDebitDetails"
-                 type="creditDebitDetails">
-          <mat-error id="invalidCreditDebitCardDetailsError" *ngIf="transactionForm.controls['creditDebitDetails'].hasError('creditDebitDetails')">
-            Please enter a valid creditDebitDetails address
-          </mat-error>
-          <mat-error id="requiredCreditDebitCardDetailsError" *ngIf="transactionForm.controls['creditDebitDetails'].hasError('required')">
-            Credit/Debit card details is
-            <strong>required</strong>
-          </mat-error>
-        </mat-form-field>
-
-        <mat-form-field appearance="fill">
-          <mat-label>Region</mat-label>
-          <mat-select formControlName="region">
-            <mat-option>None</mat-option>
-            <mat-option value="Port Louis">Port Louis</mat-option>
-            <mat-option value="CurePipe">CurePipe</mat-option>
-            <mat-option value="Vacoas">Vacoas</mat-option>
-            <mat-option value="Port Mathurin">Port Mathurin</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-card-actions>
-          <button mat-raised-button id="create" color="primary" [disabled]="transactionForm.invalid || loading"
-                  (click)="submit()">Create Transaction</button>
-          <button mat-raised-button id="clear" color="primary" (click)="clearForm()">Clear</button>
-        </mat-card-actions>
-        <br>
-      </mat-card>
+      </div>
     </div>
-
-    <mat-progress-bar *ngIf="loading" mode="indeterminate"></mat-progress-bar>
-  </form>
+  </div>
 </div>
