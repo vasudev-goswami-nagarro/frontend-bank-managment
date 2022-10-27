@@ -90,6 +90,7 @@ export class CustomerFormComponent implements OnInit {
     });
     this.customerForm.reset();
     this.isNewForm = true;
+    this.selectedCustomerNumber = '';
   }
 
   addReference(): void {
