@@ -103,6 +103,9 @@
           <mat-error id="invalidBankError" *ngIf="transactionForm.controls['bank'].hasError('bank')">
             Please enter a valid bank address
           </mat-error>
+          <mat-error id="invalidBankNameError" *ngIf="transactionForm.controls['bank'].hasError('pattern')">
+            Only characters are allowed
+          </mat-error>
           <mat-error id="requiredBankError" *ngIf="transactionForm.controls['bank'].hasError('required')">
             Bank is
             <strong>required</strong>
@@ -122,10 +125,13 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input id="paymentDetailsInput" matInput placeholder="PaymentDetails" formControlName="paymentDetails" autocomplete="paymentDetails"
+          <input id="paymentDetailsInput" matInput placeholder="Payment Details" formControlName="paymentDetails" autocomplete="paymentDetails"
                  type="paymentDetails">
           <mat-error id="invalidPaymentDetailsError" *ngIf="transactionForm.controls['paymentDetails'].hasError('paymentDetails')">
             Please enter a valid payment details
+          </mat-error>
+          <mat-error id="invalidPaymentDetailsErrorChar" *ngIf="transactionForm.controls['paymentDetails'].hasError('pattern')">
+            Only characters are allowed
           </mat-error>
           <mat-error id="requiredPaymentDetailsError" *ngIf="transactionForm.controls['paymentDetails'].hasError('required')">
             PaymentDetails is
@@ -134,7 +140,7 @@
         </mat-form-field>
 
         <mat-form-field class="full-width">
-          <input id="creditDebitDetailsInput" matInput placeholder="CreditDebitCardDetails" formControlName="creditDebitDetails" autocomplete="creditDebitDetails"
+          <input id="creditDebitDetailsInput" matInput placeholder="Credit/Debit Card Details" formControlName="creditDebitDetails" autocomplete="creditDebitDetails"
                  type="creditDebitDetails">
           <mat-error id="invalidCreditDebitCardDetailsError" *ngIf="transactionForm.controls['creditDebitDetails'].hasError('creditDebitDetails')">
             Please enter a valid creditDebitDetails address

@@ -86,6 +86,6 @@ export class TransactionEditComponent implements OnInit {
   }
 
   private  createReference() {
-    return `CUS${Math.floor(10000 * Math.random())}${Math.floor(100 * Math.random())}${Math.floor(100 * Math.random())}`;
+    return `CUS${new Date().getFullYear()}${new Date().getMonth()}${new Date().getDate()}${Math.floor(1000 + Math.random() * 9000)}`;
   }
 }
